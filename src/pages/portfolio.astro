@@ -1,0 +1,68 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+import { getCollection } from 'astro:content';
+
+// Get all entries from a collection.
+// Requires the name of the collection as an argument.
+// Example: retrieve `src/content/blog/**`
+const allPortfolios = await getCollection('portfolio');
+const pp = []
+
+for (const portfolio of allPortfolios) {
+	const { Content } = await portfolio.render();
+	pp.push({
+		portfolio,
+		Content
+	})
+}
+---
+
+<Layout title="portfolio - dilger.co">
+	<div class="flex flex-col justify-center items-center mt-14">
+		<div>
+			<h1 class="text-5xl tracking-wide">portfolio</h1>
+			<a href="/">
+				<h2 class="text-lg text-right mb-3 opacity-40">adam dilger</h2>
+			</a>
+		</div>
+
+		<p class="max-w-lg mt-8">
+			Below are some of the side-projects that I've worked on over time.
+		</p>
+		<p class="max-w-lg mb-8 text-sm">
+			Most are less than 20% complete.
+		</p>
+
+		<div class="max-w-xl">
+			{
+				pp.map(({ portfolio, Content }) => (
+					<>
+						<hr class="pb-6" />
+
+						<article>
+							<div class="flex justify-between">
+								<h3 class="text-xl">{portfolio.data.title}</h3>
+								<div>
+									{
+										portfolio.data.tags.map(tag => (
+											<span class="bg-gray-200 px-2 py-1 rounded-full mr-2" style="font-size: 10px">{tag}</span>
+										))
+									}
+								</div>
+							</div>
+
+							<div class="mb-4 text-xs text-gray-400 hover:text-gray-600">
+								<a href={portfolio.data.url}>{portfolio.data.url}</a>
+							</div>
+
+							<Content />
+
+							<img src={portfolio.data.img} alt={portfolio.data.title} class="w-full rounded-lg shadow-lg mt-4" />
+						</article>
+					</>
+				))
+			}
+		</div>
+	</div>
+</Layout>
