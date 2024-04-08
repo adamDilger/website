@@ -19,7 +19,7 @@ for (const portfolio of allPortfolios) {
 ---
 
 <Layout title="portfolio - dilger.co">
-  <div class="flex flex-col justify-center items-center mt-14">
+  <div class="flex flex-col justify-center items-center my-14">
     <div>
       <h1 class="text-5xl tracking-wide">portfolio</h1>
       <a href="/">
@@ -36,11 +36,11 @@ for (const portfolio of allPortfolios) {
       {
         pp.map(({ portfolio, Content }) => (
           <>
-            <hr class="pb-6" />
+            <hr class="my-8" />
 
             <article>
               <div class="flex justify-between">
-                <h3 class="text-xl">{portfolio.data.title}</h3>
+                <h3 class="text-2xl">{portfolio.data.title}</h3>
                 <div>
                   {portfolio.data.tags.map((tag) => (
                     <span
@@ -53,17 +53,21 @@ for (const portfolio of allPortfolios) {
                 </div>
               </div>
 
-              <div class="mb-4 text-xs text-gray-400 hover:text-gray-600">
+              <div class="mb-8 text-xs text-gray-400 hover:text-gray-600">
                 <a href={portfolio.data.url}>{portfolio.data.url}</a>
               </div>
 
               <Content />
 
-              <img
-                src={portfolio.data.img}
-                alt={portfolio.data.title}
-                class="w-full rounded-lg shadow-lg mt-4"
-              />
+              {portfolio.data.img && (
+                <div class="p-4 bg-yellow-200 rounded-lg mt-4">
+                  <img
+                    src={portfolio.data.img}
+                    alt={portfolio.data.title}
+                    class="w-full rounded-lg shadow-lg"
+                  />
+                </div>
+              )}
             </article>
           </>
         ))
